@@ -1,3 +1,5 @@
+export {};
+
 describe("index", () => {
   beforeEach(() => {
     jest.resetModules();

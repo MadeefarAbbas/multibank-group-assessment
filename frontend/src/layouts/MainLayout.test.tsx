@@ -9,20 +9,23 @@ const mockLogout = logout as jest.MockedFunction<typeof logout>;
 describe("MainLayout", () => {
   const originalLocation = window.location;
 
-  beforeAll(() => {
-    delete (window as Window & { location?: Location }).location;
-    (window as Window & { location: Location & { reload: jest.Mock } }).location = {
-      ...originalLocation,
-      reload: jest.fn(),
-    } as Location & { reload: jest.Mock };
-  });
-
-  afterAll(() => {
-    (window as Window & { location: Location }).location = originalLocation;
-  });
-
   beforeEach(() => {
     jest.clearAllMocks();
+
+    Object.defineProperty(window, "location", {
+      configurable: true,
+      value: {
+        ...originalLocation,
+        reload: jest.fn(),
+      },
+    });
+  });
+
+  afterEach(() => {
+    Object.defineProperty(window, "location", {
+      configurable: true,
+      value: originalLocation,
+    });
   });
 
   it("renders the layout shell and children", () => {

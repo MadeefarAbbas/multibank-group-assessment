@@ -35,7 +35,7 @@ This backend provides:
 
 2. Install dependencies:
    ```bash
-   npm.cmd install
+   npm install
    ```
 
 ## Running the Server

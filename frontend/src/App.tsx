@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Box, Typography } from "@mui/material";
 import { useWebSocket } from "./hooks/useWebSocket";
 import { useHistory } from "./hooks/useHistory";
 import { TickerList } from "./components/TickerList";
@@ -28,11 +29,28 @@ function App() {
 
   return (
     <MainLayout>
-      <TickerList prices={prices} onSelect={setSelected} selected={selected} />
-      
-      <ChartContainer title={selected}>
-        <Chart data={history} />
-      </ChartContainer>
+      <Box
+        sx={{
+          width: "100%",
+          maxWidth: 1200,
+          mx: "auto",
+          display: "grid",
+          gap: { xs: 2, md: 3 },
+        }}
+      >
+        <TickerList prices={prices} onSelect={setSelected} selected={selected} />
+
+        <ChartContainer title={selected}>
+          <Typography
+            variant="body2"
+            color="text.secondary"
+            sx={{ mb: 2 }}
+          >
+            Recent market history for the selected symbol.
+          </Typography>
+          <Chart data={history} />
+        </ChartContainer>
+      </Box>
     </MainLayout>
   );
 }

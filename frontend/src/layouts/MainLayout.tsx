@@ -16,21 +16,34 @@ export const MainLayout = ({ children }: any) => {
   return (
     <>
       <AppBar position="static">
-        <Toolbar>
-          <Typography variant="h6">
+        <Toolbar
+          sx={{
+            px: { xs: 2, sm: 3 },
+            py: { xs: 1, sm: 1.25 },
+            gap: 1.5,
+            flexWrap: { xs: "wrap", sm: "nowrap" },
+          }}
+        >
+          <Typography
+            variant="h6"
+            sx={{ fontSize: { xs: "1rem", sm: "1.25rem" }, flexShrink: 0 }}
+          >
             Trading Dashboard
           </Typography>
 
-          {/* Push logout button to right */}
-          <Box sx={{ flexGrow: 1 }} />
+          <Box sx={{ flexGrow: 1, display: { xs: "none", sm: "block" } }} />
 
-          <Button color="inherit" onClick={handleLogout}>
+          <Button
+            color="inherit"
+            onClick={handleLogout}
+            sx={{ width: { xs: "100%", sm: "auto" }, ml: { xs: 0, sm: "auto" } }}
+          >
             Logout
           </Button>
         </Toolbar>
       </AppBar>
 
-      <Box sx={{ padding: 3 }}>{children}</Box>
+      <Box sx={{ px: { xs: 2, sm: 3 }, py: { xs: 2, sm: 3 } }}>{children}</Box>
     </>
   );
 };

@@ -12,5 +12,5 @@ const server = http.createServer(app);
 initWebSocket(server);
 
 server.listen(5000, () => {
-  console.log("Backend running on port 5000");
+  console.log("Backend running on http://localhost:5000");
 });

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useWebSocket } from "./hooks/useWebSocket";
 import { useHistory } from "./hooks/useHistory";
 import { TickerList } from "./components/TickerList";
@@ -10,11 +10,27 @@ function App() {
 
   const history = useHistory(selected);
 
+  // Mock Auth
+  useEffect(() => {
+    localStorage.setItem("token", "mock-token");
+  }, []);
+
+  useEffect(() => {
+    if (prices["BTC-USD"]) {
+      const price = prices["BTC-USD"];
+      if (price > 65000) {
+        alert("BTC crossed threshold!");
+      }
+    }
+  }, [prices]);
+
   return (
-    <div>
+    <div style={{ padding: 20 }}>
       <h1>Trading Dashboard</h1>
 
       <TickerList prices={prices} onSelect={setSelected} />
+
+      <h2>{selected}</h2>
 
       <Chart data={history} />
     </div>

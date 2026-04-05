@@ -1,46 +1,118 @@
-# Getting Started with Create React App
+# Frontend - MultiBank Group Assessment
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A React + TypeScript frontend for a trading dashboard that displays live ticker prices and historical chart data.
 
-## Available Scripts
+## What this app does
 
-In the project directory, you can run:
+- Connects to the backend WebSocket at `ws://localhost:5000` to receive live price updates
+- Displays a list of ticker symbols and their current prices
+- Lets the user select a ticker to view price history
+- Uses `axios` to fetch ticker history from `http://localhost:5000/api/history/:symbol`
+- Renders the history using `recharts`
+- Stores a mock auth token in `localStorage` on app load
+- Alerts the user when BTC price crosses `65000`
 
-### `npm start`
+## Tech stack
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+- React 19
+- TypeScript
+- Create React App
+- Axios
+- Recharts
+- Material UI (`@mui/material`, `@mui/icons-material`, `@emotion/react`, `@emotion/styled`)
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+## Project structure
 
-### `npm test`
+```
+frontend/
+├── public/
+├── src/
+│   ├── api/
+│   │   └── tickerApi.ts       # REST API client for backend endpoints
+│   ├── components/
+│   │   ├── Chart.tsx          # Line chart for ticker history
+│   │   └── TickerList.tsx     # Live ticker list and selection
+│   ├── hooks/
+│   │   ├── useHistory.ts      # Fetches and caches price history
+│   │   └── useWebSocket.ts    # Connects to backend WebSocket for live prices
+│   ├── App.tsx                # Main app layout and dashboard logic
+│   ├── index.tsx
+│   ├── App.css
+│   └── ...
+├── package.json
+├── tsconfig.json
+├── Dockerfile
+└── README.md
+```
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Requirements
 
-### `npm run build`
+- Node.js 18 or higher
+- Backend server running at `http://localhost:5000`
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Installation
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+From the `frontend` folder:
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+```powershell
+cd frontend
+npm install
+```
 
-### `npm run eject`
+> On Windows, use `npm.cmd` when PowerShell blocks `npm.ps1` due to execution policy.
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+## Running the app
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+Start the development server:
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+```powershell
+npm start
+```
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+Then open `http://localhost:3000` in your browser.
 
-## Learn More
+## Available scripts
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+- `npm start` - Start the React development server
+- `npm test` - Run the Create React App test runner
+- `npm run build` - Build the production-ready app into `build/`
+- `npm run eject` - Eject CRA configuration (one-way)
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+## Backend dependency
+
+This frontend depends on the backend service for:
+
+- `ws://localhost:5000` for live WebSocket price updates
+- `http://localhost:5000/api` for ticker history and symbol endpoints
+
+If the backend is not running, live prices and historical chart data will not work.
+
+## Docker
+
+Build the frontend Docker image:
+
+```bash
+docker build -t multibank-frontend .
+```
+
+Run the container:
+
+```bash
+docker run -p 3000:3000 multibank-frontend
+```
+
+## Notes
+
+- Mock auth token is stored in `localStorage` on app load.
+- BTC threshold alert triggers when `BTC-USD` exceeds `65000`.
+
+## Troubleshooting
+
+If `npm` is blocked by PowerShell execution policy, use:
+
+```powershell
+Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass -Force
+npm.cmd start
+```
+
+If port `3000` is already in use, stop the conflicting service or run on a different port.

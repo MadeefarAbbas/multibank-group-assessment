@@ -9,6 +9,9 @@ This frontend is a React + TypeScript trading dashboard that connects to the bac
 - Live ticker updates over WebSocket from `ws://localhost:5000`
 - Historical price fetches from `http://localhost:5000/api/history/:symbol`
 - Ticker selection with highlighted selected card state
+- Responsive dashboard layout for mobile, tablet, and desktop screens
+- Responsive chart container with fluid width sizing
+- Mobile-friendly header and card spacing
 - BTC threshold alert when `BTC-USD` moves above `65000`
 - Material UI based layout and cards
 - Recharts line chart for price history
@@ -91,27 +94,25 @@ From the frontend folder:
 
 ```powershell
 cd frontend
-npm.cmd install
+npm install
 ```
-
-If your PowerShell session allows normal npm execution, `npm install` also works.
 
 ## Running the App
 
 Start the frontend development server:
 
 ```powershell
-npm.cmd start
+npm start
 ```
 
 Then open `http://localhost:3000`.
 
 ## Available Scripts
 
-- `npm.cmd start` starts the development server
-- `npm.cmd test` runs the frontend unit tests
-- `npm.cmd run build` builds the production bundle into `build/`
-- `npm.cmd run eject` ejects Create React App configuration
+- `npm start` starts the development server
+- `npm test` runs the frontend unit tests
+- `npm run build` builds the production bundle into `build/`
+- `npm run eject` ejects Create React App configuration
 
 ## Backend Integration
 
@@ -131,6 +132,18 @@ If the backend is not running, login still renders but the dashboard data will n
 4. A dashboard loader appears briefly.
 5. The main dashboard renders with live tickers and chart history.
 
+## Responsive Design
+
+The frontend has been updated to behave better across screen sizes:
+
+- The dashboard content is centered with a max-width container on large screens
+- The top app bar wraps more cleanly on smaller screens
+- Ticker cards resize across breakpoints for phone, tablet, and desktop layouts
+- The chart uses a responsive container instead of a fixed width
+- Global styles prevent horizontal overflow on smaller devices
+
+This makes the dashboard usable on both desktop and mobile without layout breaking.
+
 ## Testing
 
 The frontend now has unit tests for the main executable modules, including:
@@ -147,7 +160,7 @@ The frontend now has unit tests for the main executable modules, including:
 Run the suite with:
 
 ```powershell
-npm.cmd test -- --watchAll=false
+npm test -- --watchAll=false
 ```
 
 ## Docker
@@ -168,16 +181,16 @@ docker run -p 3000:3000 multibank-frontend
 
 ### PowerShell blocks npm
 
-Use `npm.cmd` instead of `npm`:
-
-```powershell
-npm.cmd start
-```
-
-Or allow scripts for the current session:
+Allow scripts for the current session:
 
 ```powershell
 Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass -Force
+```
+
+Then run:
+
+```powershell
+npm start
 ```
 
 ### Port 3000 is already in use

@@ -3,6 +3,8 @@ import { useWebSocket } from "./hooks/useWebSocket";
 import { useHistory } from "./hooks/useHistory";
 import { TickerList } from "./components/TickerList";
 import { Chart } from "./components/Chart";
+import { MainLayout } from "./layouts/MainLayout";
+import { ChartContainer } from "./components/ChartContainer";
 
 function App() {
   const prices = useWebSocket();
@@ -25,15 +27,13 @@ function App() {
   }, [prices]);
 
   return (
-    <div style={{ padding: 20 }}>
-      <h1>Trading Dashboard</h1>
-
-      <TickerList prices={prices} onSelect={setSelected} />
-
-      <h2>{selected}</h2>
-
-      <Chart data={history} />
-    </div>
+    <MainLayout>
+      <TickerList prices={prices} onSelect={setSelected} selected={selected} />
+      
+      <ChartContainer title={selected}>
+        <Chart data={history} />
+      </ChartContainer>
+    </MainLayout>
   );
 }
 
